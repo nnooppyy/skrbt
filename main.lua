@@ -7,7 +7,7 @@ local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Name = "Wafi_AFK"
 ScreenGui.ResetOnSpawn = false
 
--- إجبار الواجهة على الظهور (إذا دلتا منع CoreGui، تروح لـ PlayerGui)
+-- إجبار الواجهة على الظهور (تجنباً لمشاكل دلتا)
 local success, err = pcall(function()
     ScreenGui.Parent = CoreGui
 end)
@@ -19,8 +19,8 @@ end
 -- تصميم الزر
 local Button = Instance.new("TextButton")
 Button.Size = UDim2.new(0, 150, 0, 50)
-Button.Position = UDim2.new(0.5, -75, 0.2, 0) -- مكانه فوق في النص
-Button.BackgroundColor3 = Color3.fromRGB(200, 0, 0) -- لونه أحمر بالبداية
+Button.Position = UDim2.new(0.5, -75, 0.2, 0)
+Button.BackgroundColor3 = Color3.fromRGB(200, 0, 0) -- أحمر (معطل)
 Button.TextColor3 = Color3.fromRGB(255, 255, 255)
 Button.Text = "AFK: OFF"
 Button.TextSize = 25
@@ -41,16 +41,16 @@ Button.MouseButton1Click:Connect(function()
     isAFK = not isAFK
     if isAFK then
         Button.Text = "AFK: ON"
-        Button.BackgroundColor3 = Color3.fromRGB(0, 200, 0) -- يصير أخضر
+        Button.BackgroundColor3 = Color3.fromRGB(0, 200, 0) -- أخضر (شغال)
     else
         Button.Text = "AFK: OFF"
-        Button.BackgroundColor3 = Color3.fromRGB(200, 0, 0) -- يرجع أحمر
+        Button.BackgroundColor3 = Color3.fromRGB(200, 0, 0)
     end
 end)
 
--- نظام القفز
+-- نظام القفز (كل ثانيتين)
 task.spawn(function()
-    while task.wait(1) do
+    while task.wait(2) do
         if isAFK and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("Humanoid") then
             LocalPlayer.Character.Humanoid.Jump = true
         end
