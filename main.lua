@@ -228,11 +228,16 @@ getgenv().Wafi_Loop = task.spawn(function()
                     local dist = (myRoot.Position - tRoot.Position).Magnitude
                     
                     -- هنا التعديل: المسافة 2.5 تعني الملامسة الجسدية التامة
-                    if dist <= 2.5 then
-                        myHum.Health = 0 -- يذبح نفسه إذا صقع فيه
-                    else
-                        myHum:MoveTo(tRoot.Position) -- يستمر بالركض لين يوصله
-                    end
+                    myHum:MoveTo(tRoot.Position)
+
+       if dist <= 2.5 then
+             task.wait(0.2)
+              local newDist = (myRoot.Position - tRoot.Position).Magnitude
+
+              if newDist <= 2.5 then
+               myHum.Health = 0
+                      end
+                   end
                 end
             end
         end
